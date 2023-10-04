@@ -1,0 +1,1532 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "panels": [],
+      "title": "Chickens",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "text",
+                  "index": 3
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "from": 1,
+                "result": {
+                  "color": "light-green",
+                  "index": 0
+                },
+                "to": 3
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 4,
+                "result": {
+                  "color": "green",
+                  "index": 1
+                },
+                "to": 6
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 7,
+                "result": {
+                  "color": "semi-dark-green",
+                  "index": 2
+                },
+                "to": 1000
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "color": "light-orange",
+                  "index": 4,
+                  "text": "(no data)"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.0",
+      "targets": [
+        {
+          "database": "\"home_monitoring\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "chicken_count_yolo",
+          "rawQuery": "SELECT MAX(egg_sum.egg_count)\r\nFROM (\r\n  SELECT\r\n      time, measure_name, SUM(measure_value::double) as egg_count\r\n  FROM home_monitoring.metrics\r\n  WHERE time > ago(20m)\r\n      AND measure_name LIKE 'egg_count_blob'\r\n  GROUP BY time, measure_name\r\n) egg_sum",
+          "refId": "A",
+          "table": "\"metrics\""
+        }
+      ],
+      "title": "Current egg count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#fa662a",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "measure"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 18,
+        "x": 6,
+        "y": 1
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tmeasure_name, \r\n  nesting_box,\r\n  CREATE_TIME_SERIES(time, measure_value::double) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name LIKE 'egg_count_%'\r\nGROUP BY measure_name, nesting_box",
+          "refId": "A"
+        }
+      ],
+      "title": "Eggs laid by algo and nesting box",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#fa662a",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "measure"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n    nesting_box,\r\n    CREATE_TIME_SERIES(time, measure_value::double) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE time > ago(24h)\r\n\tAND measure_name = 'chicken_count_yolo'\r\nGROUP BY nesting_box",
+          "refId": "A"
+        }
+      ],
+      "title": "Chickens detected by nesting box",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#fa662a",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tCREATE_TIME_SERIES(time, measure_value::double * 1.8 + 32) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='temperature'\r\n\tAND name='Chicken brooder'\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Chicken coop temp",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 10,
+      "panels": [],
+      "title": "Temperature",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#fa662a",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 18
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='temperature'\r\n\tAND name='indoors'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "hide": false,
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double * 1.8 + 32)  AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='temperature'\r\n\tAND name='Office temp'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "C"
+        }
+      ],
+      "title": "Indoor temps",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 18
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "hide": false,
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double * 1.8 + 32)  AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='temperature'\r\n\tAND name='Fridge temp'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "hide": false,
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double * 1.8 + 32)  AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='temperature'\r\n\tAND name='Freezer temp'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "D"
+        }
+      ],
+      "title": "Refrigerator temperature",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 18
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "hide": false,
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double * 1.8 + 32)  AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='temperature'\r\n\tAND name='Hot Tub sensor'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "C"
+        }
+      ],
+      "title": "Hot tub temperature",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Garden",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 27
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='soil_moisture'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Soil Moisture",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-red",
+                  "index": 1,
+                  "text": "Low!"
+                },
+                "1": {
+                  "color": "semi-dark-green",
+                  "index": 0,
+                  "text": "OK"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 12,
+        "y": 27
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='leak_sensor'\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Well tank water level",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-red",
+                  "index": 1,
+                  "text": "Low!"
+                },
+                "1": {
+                  "color": "semi-dark-green",
+                  "index": 0,
+                  "text": "OK"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "color": "semi-dark-yellow",
+                  "index": 2,
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 27
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS measure\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='leak_sensor'\r\n\tAND name = 'chicken_water_sensor'\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Chicken water level",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Utilities",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "light-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 39,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "gallons"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS \"gallons used\"\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name = 'household_water_usage'\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Household water usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "continuous-YlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 38,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "rawQuery": "SELECT\r\n\tbin(time, 1h), SUM(measure_value::double) / 1000 AS \"kWh\"\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name = 'solar_energy_produced'\r\nGROUP BY bin(time, 1h)\r\nORDER BY bin(time, 1h)",
+          "refId": "A"
+        }
+      ],
+      "title": "Solar energy produced",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 45
+      },
+      "id": 7,
+      "panels": [],
+      "title": "Home network",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 46
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS ping_min\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='ping_min'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "hide": false,
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS ping_avg\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='ping_avg'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "hide": false,
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS ping_max\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='ping_max'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "C"
+        }
+      ],
+      "title": "primary_residence ping timing",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "DQXzf7S4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 46
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "DQXzf7S4z"
+          },
+          "key": "Q-48f05047-11ab-438c-bf8f-b5bbbbc05ac4-0",
+          "measure": "",
+          "rawQuery": "SELECT\r\n\tname,\r\n\tCREATE_TIME_SERIES(time, measure_value::double) AS ping_packet_loss_pct\r\nFROM home_monitoring.metrics\r\nWHERE $__timeFilter\r\n\tAND measure_name='ping_packet_loss_pct'\r\nGROUP BY name\r\nORDER BY AVG(measure_value::double) DESC\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "primary_residence ping packet loss",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Home Monitoring",
+  "uid": "Rl2kY7SVk",
+  "version": 6,
+  "weekStart": ""
+}

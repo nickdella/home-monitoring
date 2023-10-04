@@ -1,0 +1,6 @@
+# Copy this file as config.tfvars and fill in the variables
+alarms_email = "FILL ME IN"
+dev_account_number = -1
+prod_account_number = -1
+assets_bucket_name = "FILL ME IN"
+aws_account_user_name = "FILL ME IN"

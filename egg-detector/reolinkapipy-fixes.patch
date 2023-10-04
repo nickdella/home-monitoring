@@ -1,0 +1,36 @@
+diff --git a/reolinkapi/mixins/stream.py b/reolinkapi/mixins/stream.py
+index 6798a42..bc8d877 100644
+--- a/reolinkapi/mixins/stream.py
++++ b/reolinkapi/mixins/stream.py
+@@ -43,7 +43,7 @@ try:
+             parms = parse.urlencode(data).encode("utf-8")
+ 
+             try:
+-                response = requests.get(self.url, proxies=proxies, params=parms, timeout=timeout)
++                response = requests.get(self.url, proxies=proxies, params=parms, timeout=timeout, verify=False)
+                 if response.status_code == 200:
+                     return open_image(BytesIO(response.content))
+                 print("Could not retrieve data from camera successfully. Status:", response.status_code)
+diff --git a/setup.py b/setup.py
+index 8166180..e1b123b 100644
+--- a/setup.py
++++ b/setup.py
+@@ -27,14 +27,14 @@ AUTHOR = 'Benehiko'
+ LICENSE = 'GPL-3.0'
+ INSTALL_REQUIRES = [
+     'PySocks==1.7.1',
+-    'PyYaml==5.3.1',
++    'PyYaml<=6.0',
+     'requests>=2.18.4',
+ ]
+ EXTRAS_REQUIRE = {
+     'streaming': [
+-        'numpy==1.19.4',
+-        'opencv-python==4.4.0.46',
+-        'Pillow==8.0.1',
++        'numpy==1.25.2',
++        'opencv-python==4.8.0.76',
++        'Pillow==10.0.0',
+     ],
+ }
+ 

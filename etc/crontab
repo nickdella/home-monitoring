@@ -1,0 +1,4 @@
+# These cron jobs run on the on-premise server. See setup instructions in README.md
+*/5 * * * * cd ~/home-monitoring && make run-ping  >> /var/log/home-monitoring/ping.log 2>&1
+*/5 14-23,0-3 * * * cd ~/egg-detector && make run >> /var/log/home-monitoring/egg-detector.log 2>&1
+0 0 * * * - find /var/egg-detector/output -mtime +30 -delete

@@ -1,0 +1,60 @@
+<html>
+  <head>
+      <title>Latest Egg Detector Results</title>
+      <style>
+          body {
+            background-color: #111111;
+            color: #EEEEEE;
+            font-family: sans-serif;
+          }
+          .big {
+            font-size: 40pt;
+          }
+          .bigger {
+            font-size: 48pt;
+          }
+          .green {
+            color: #16b548
+          }
+          .yellow {
+            color: #e0d71b
+          }
+          .footer {
+            display: flex;
+            font-size: 12pt;
+          }
+          .row {
+            display: flex;
+          }
+          .column {
+            flex: 50%;
+            padding: 10px;
+          }
+          img {
+            padding: 10px;
+          }
+    </style>
+  </head>
+  <body>
+    <h1 class="big">Egg Count:
+      <span class="bigger"><span class="{% if egg_count > 0 %}green{% else %}yellow{% endif %}">{{ egg_count }}</span></span>
+    </h1>
+
+    <div class="row">
+      {% for box in nesting_boxes %}
+      <div class="column">
+        <h2>Nesting Box #{{ loop.index }}</h2>
+        <div>
+          <img src="{{ box.yolo_img_url }}" width="300" height="300"/>
+        </div>
+        <div>
+          <img src="{{ box.blob_img_url }}" width="300" height="300"/>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <br/>
+    <br/>
+    <div class="footer">Last updated: {{ last_updated }}</div>
+  </body>
+</html>

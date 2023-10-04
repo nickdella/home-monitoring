@@ -1,0 +1,13 @@
+__pycache__
+.DS_Store
+.egg-info
+.idea
+.terraform
+.terraform.lock.hcl
+*.tfvars
+dist
+ldist
+poetry.lock
+home_monitoring/secrets.py
+home_monitoring.egg-info
+terraform/.gitignore" 3L, 32B

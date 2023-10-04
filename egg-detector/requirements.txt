@@ -1,0 +1,13 @@
+arrow
+boto3<2.0
+requests<3.0
+numpy<2.0
+opencv-python<5.0
+Pillow<11.0
+python-kasa<=1.0
+reolinkapi<0.2.0
+reolinkapi[streaming]<0.2.0
+ultralytics<9.0
+flake8
+pytest
+pytest-asyncio
