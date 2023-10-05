@@ -8,14 +8,14 @@ creation steps required before running terraform.
 - Log into the console with the new account email address and reset the root account password
 - Set up MFA for root account (top-right account menu->Security Credentials)
 - Go to IAM and set up 'terraform' IAM user (no console access), w/administrator policy,  generate access key
-- Go to EC2 and create a new key pair, download PEM file and move to ~/.ssh w/permissions 600
+- Go to EC2 and create a new key pair, download PEM file and move to ~/.ssh with file permissions 600
 - Add terraform user credentials to ~/.aws/credentials. The dev account credentials 
   should be under the `[default]` section, whereas prod credentials fall under `[home-monitoring-prod]`
 - Run create_backend.sh to create Terraform S3 bucket
-- Copy generated bucket name to backend.tf under account root module (e.g. `terraform/environments/dev/backend.tf`)
-- Import this module `account_base` into account root module, configuring the `user_name` variable
+- Copy generated bucket name to backend.tf under the account root module (e.g. `terraform/environments/dev/backend.tf`)
+- Import this module `account_base` into the account root module, configuring the `user_name` variable
 - Run Terraform:
   - `terraform init`
-  - `terraform plan -out tflane`
+  - `terraform plan -out tfplan`
   - `terraform apply tfplan`
-- Log into console as IAM admin user, setup MFA
+- Log into the console as IAM admin user, setup MFA
