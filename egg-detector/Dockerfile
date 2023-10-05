@@ -20,6 +20,8 @@ RUN if [ "`uname -m`" = "x86_64" ] ; then \
 RUN git clone https://github.com/ReolinkCameraAPI/reolinkapipy.git
 COPY reolinkapipy-fixes.patch reolinkapipy
 WORKDIR /app/reolinkapipy
+# checkout last known good version
+RUN git checkout f15171147bece0286e19c9475ded85f06ecafc06
 RUN git apply reolinkapipy-fixes.patch
 RUN pip install .
 RUN pip install ".[streaming]"
